@@ -7,7 +7,7 @@ Current version 1.3, use Python 3.2+, no compiled
 - help and safe input arguments
 - text GUI
 - works with regular expressions and filenames containing dots
-- fixed duplicate new filenames (adding char '_' before last dot)
+- fixed duplicate new filenames (using add char '_' before last dot)
 - methods:
 - - insert pattern at position
 - - remove from position to position
