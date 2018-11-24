@@ -78,7 +78,7 @@ def main():
     print('\n' + '\033[1m Python Renamer \033[0m'.center(88,'-'))
     print('|' + ('Current directory: '+cwd).center(78,' ') + '|')
     print('|' + (method_dict[args.method] % (args.arg1, args.arg2)).center(78,' ') + '|')
-    print('|' + ('Simulation: ' + str(args.nonwrite) + '  |  Recursive: ' + str(args.recursive)).center(78,' ') + '|')
+    print('|' + ('Short print: ' + str(args.short) + '  |  Simulation: ' + str(args.nonwrite) + '  |  Recursive: ' + str(args.recursive)).center(78,' ') + '|')
     print('-'*80 + '\n')
 
 
