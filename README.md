@@ -21,12 +21,12 @@ Current version 1.3, use Python 3.2+, no compiled
 
 - `pyren ins -4 'any string' -n`
 
-'abcd.ef.xyz' --> 'abcd.efany string.xyz' in simulation
+  'abcd.ef.xyz' --> 'abcd.efany string.xyz' in simulation
 
 - `pyren rem 2 100 -s`
 
-'abcd.ef.xyz' --> 'ab' in short output
+  'abcd.ef.xyz' --> 'ab' in short output
 
 - `pyren rep ^[0-9][0-9] '' -rn`
 
-'12 a1bcd00' --> ' a1bcd00' in recursive, simulation
+  '12 a1bcd00' --> ' a1bcd00' in recursive, simulation
