@@ -3,11 +3,11 @@
 
 Current version 1.5, use Python 3.2+, no compiled
 
-**Features:**
+**Features**
 - help and safe input arguments
 - text GUI
 - works with regular expressions and filenames containing dots
-- fixed duplicate new filenames (added '(copy)' to filename)
+- filenames duplicate solver (added '(copy)' to filename)
 - methods:
 - - **`ins`** insert pattern at position
 - - **`rem`** remove all from position to position
@@ -17,19 +17,19 @@ Current version 1.5, use Python 3.2+, no compiled
 - - **`s`** short output format
 - - **`r`** recursive mode
 
-**Examples:**
+**Examples**
 
 - `pyren ins -4 'any string'`
 
-  'abcd.ef.xyz' --> 'abcd.efany string.xyz'   in only simulation mode
+  'abcd.ef.xyz' --> 'abcd.efany string.xyz' *in only simulation mode*
 
 - `pyren rem 2 100 -w`
 
-  'abcd.ef.xyz' --> 'ab'    in write mode
+  'abcd.ef.xyz' --> 'ab' *in write mode*
 
 - `pyren rep ^[0-9][0-9] '' -rs`
 
-  '12 a1bcd00' --> ' a1bcd00'   in recursive mode, short output format, only simulation mode
+  '12 a1bcd00' --> ' a1bcd00' *in recursive mode, short output format, only simulation mode*
   
 **How to install**
 
