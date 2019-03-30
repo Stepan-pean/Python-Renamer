@@ -1,7 +1,7 @@
 # Pyren
 *files renamer in console Bash*
 
-Current version 1.3, use Python 3.2+, no compiled
+Current version 1.5, use Python 3.2+, no compiled
 
 **Features:**
 - help and safe input arguments
@@ -30,3 +30,6 @@ Current version 1.3, use Python 3.2+, no compiled
 - `pyren rep ^[0-9][0-9] '' -rn`
 
   '12 a1bcd00' --> ' a1bcd00' in recursive, simulation
+  
+**How to install**
+As superuser (sudo) save file *pyren* into `/bin` and set `chmod 755`.
