@@ -33,4 +33,5 @@ Current version 1.5, use Python 3.2+, no compiled
   
 **How to install**
 
-As superuser (sudo) save file **pyren** into `/bin` and set `chmod 755`. Now you may any directory open in bash and write `pyren`.
+As superuser (sudo) save file **pyren** into `/bin` and set `chmod 755`.
+Now, you may any directory open in bash and write command `pyren`.
