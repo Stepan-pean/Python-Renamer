@@ -7,29 +7,29 @@ Current version 1.5, use Python 3.2+, no compiled
 - help and safe input arguments
 - text GUI
 - works with regular expressions and filenames containing dots
-- fixed duplicate new filenames (using char '_' added before last dot)
+- fixed duplicate new filenames (added '(copy)' to filename)
 - methods:
-- - insert pattern at position
-- - remove all from position to position
-- - replace pattern by pattern
-- modes:
-- - simulation
-- - short output format
-- - recursive
+- - **`ins`** insert pattern at position
+- - **`rem`** remove all from position to position
+- - **`rep`** replace pattern by pattern
+- modes (switches):
+- - **`w`** write mode
+- - **`s`** short output format
+- - **`r`** recursive mode
 
 **Examples:**
 
-- `pyren ins -4 'any string' -n`
+- `pyren ins -4 'any string'`
 
-  'abcd.ef.xyz' --> 'abcd.efany string.xyz' in simulation
+  'abcd.ef.xyz' --> 'abcd.efany string.xyz' in only simulation mode
 
-- `pyren rem 2 100 -s`
+- `pyren rem 2 100 -sw`
 
-  'abcd.ef.xyz' --> 'ab' in short output
+  'abcd.ef.xyz' --> 'ab' in short output format, write mode
 
 - `pyren rep ^[0-9][0-9] '' -rn`
 
-  '12 a1bcd00' --> ' a1bcd00' in recursive, simulation
+  '12 a1bcd00' --> ' a1bcd00' in recursive, only simulation mode
   
 **How to install**
 
