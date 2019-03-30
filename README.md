@@ -21,15 +21,15 @@ Current version 1.5, use Python 3.2+, no compiled
 
 - `pyren ins -4 'any string'`
 
-  'abcd.ef.xyz' --> 'abcd.efany string.xyz' in only simulation mode
+  'abcd.ef.xyz' --> 'abcd.efany string.xyz'   in only simulation mode
 
-- `pyren rem 2 100 -sw`
+- `pyren rem 2 100 -w`
 
-  'abcd.ef.xyz' --> 'ab' in short output format, write mode
+  'abcd.ef.xyz' --> 'ab'    in write mode
 
-- `pyren rep ^[0-9][0-9] '' -rn`
+- `pyren rep ^[0-9][0-9] '' -rs`
 
-  '12 a1bcd00' --> ' a1bcd00' in recursive, only simulation mode
+  '12 a1bcd00' --> ' a1bcd00'   in recursive mode, short output format, only simulation mode
   
 **How to install**
 
