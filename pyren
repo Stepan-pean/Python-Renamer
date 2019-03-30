@@ -1,0 +1,157 @@
+#!/usr/bin/python
+
+#Pyren, PYthon RENamer for bash; Developed with Python3 version 3.6.5; created by Stepan Tucek
+######################################## Devlog ################################################
+#Why Python: first I tried write script in bash but I figure out python is much better in this purpose.
+#pyren isn't compiled (I trying but still fail, may because coding: UTF-8 in bash and other coding in Note xed?)
+#its in \bin and \bin is added to $PATH by code in ~/.profile, cause can call pyren in bash from everywhere: 'pyren ...'; set chmod 755
+######################################### Uplog ################################################
+#What's new in Pyren version 1.0 (20181116): working dir is current dir without recursive; work with files; simulation mode; method: insert, remove, replace
+#What's new in Pyren version 1.1 (20181117): -s switches output: "oldname --> newname" or shorty "newname"; bold text for "newname", REPLACE can execute regular expressions (https://stackoverflow.com/questions/16720541/python-string-replace-regular-expression); pyren cannot change self name
+#What's new in Pyren version 1.2 (20181117): fixed duplicate names: if newnameA.C==newnameB.C then newnameB rename to newnameB_.C and print newnameB.C
+#What's new in Pyren version 1.3 (20181118): add mode 'recursive'
+#What's new in Pyren version 1.4 (20190329): print only changed filenames; increased safety in duplicate names and change adding: "AB..VWXYZ" --> "AB..(copy)WXYZ", duplicate working now in recursive mode; increased safety simulation mode: -w --> write or work; info output format
+#What's new in Pyren version 1.5 (20190330): complete rebuild FOR FILE section, new duplication solver, I think 100% safety, new GUI format
+
+
+
+# IMPORT
+
+import os, re
+from argparse import ArgumentParser #since Python 3.2
+
+
+
+# FUNCTIONS
+
+def methods( method, name, arg1, arg2 ): #every args is str !
+
+    # INSERT from,new
+    if method=='ins':
+        arg1=int(arg1)
+        return name[:arg1]+arg2+name[arg1:] #from>length return name+new
+
+    # REMOVE from,to
+    elif method=='rem':
+        arg1=int(arg1)
+        arg2=int(arg2)
+        return name[:arg1]+name[arg2:] #to>length or from>to no return error
+
+    # REPLACE old,new
+    else:
+        return re.sub(arg1,arg2,name) #slow version (compile expression for every file again), string.replace cannot read regular expression
+
+
+
+def main():
+
+
+
+    # VAR
+
+    names_list = []
+    dupl_solved=False
+    dupl_solved_names_list = []
+    next_dir=False
+
+
+
+    # INPUT, HELP
+
+    parser = ArgumentParser()
+
+    parser.add_argument('--version', action='version', version='1.5')
+    parser.add_argument('method', choices=['ins','rem','rep'], help='insert / remove / replace')
+    parser.add_argument('arg1', help='[int begin] / [int begin] / [str old]')
+    parser.add_argument('arg2', help='[str new] / [int end] / [str new]')
+    parser.add_argument('-w', '--write', action='store_true', help='write mode, default is simulation mode')
+    parser.add_argument('-s', '--short', action='store_true', help='print only new names')
+    parser.add_argument('-r', '--recursive', action='store_true', help='recursive searching')
+
+    args = parser.parse_args()
+
+
+    cwd = os.getcwd() #working dir is current dir
+
+
+
+    # GUI
+
+    method_dict={'ins':'INSERT at position %s pattern \'%s\'', 'rem':'REMOVE pattern at position from %s to %s', 'rep':'REPLACE pattern \'%s\' with \'%s\''}
+
+    print('\n' + '\033[1m Python Renamer \033[0m'.center(88,'-'))
+    print('|' + ('Current directory: '+cwd).center(78,' ') + '|')
+    print('|' + (method_dict[args.method] % (args.arg1, args.arg2)).center(78,' ') + '|')
+    print('|' + ('Short print: \033[1m' + str(args.short) + '\033[0m  |  Recursive: \033[1m' + str(args.recursive) +'\033[0m | Write: \033[1m' + str(args.write) + '\033[0m').center(102,' ') + '|')
+    print('-'*80 + '\n')
+
+
+
+    # FOR ALL FILES/DIRS
+
+    for subdir, dirs, files in os.walk(cwd, topdown=True):
+        if not args.recursive:
+            del dirs[:]  #remove the subdirectories from list
+        else:
+            next_dir=True
+
+
+        names_list=files
+        for i in range(len(names_list)):
+
+
+
+            # FOR FILE
+
+            if names_list[i]!='pyren': #don't change self
+                newname0=methods(args.method,names_list[i],args.arg1,args.arg2) #call rename function (names_list[i]-->newname0)
+                if newname0!=names_list[i]: #only changed name
+
+                    if next_dir:
+                        print('\n'+subdir+'/'+'\n')
+
+                    newname=newname0
+
+                    while newname in names_list: #duplicate solver (newname0-->newname)
+                        if len(newname)>4 and newname[-4]=='.':
+                            newname=newname[:-4]+'(copy)'+newname[-4:] #add str "(copy)" before .xyz
+                        else:
+                            newname=newname+'(copy)' #or add "(copy)" at the end
+                        dupl_solved=True
+                    if dupl_solved and not(subdir+'/'+newname0 in dupl_solved_names_list): #reason what I'm using newname0
+                        dupl_solved_names_list.append(subdir+'/'+newname0)
+                        dupl_solved=False
+
+
+                    if args.short: #print format
+                        string_old=''
+                    else:
+                        string_old=("'" + names_list[i] + "'").ljust(30) + ' --> \t'
+
+                    print (string_old + "'" + '\033[1m' + newname + '\033[0m' + "'") #bold new name
+                    if args.write: #args.write: now write new filename, CAUTION: RENAME !
+                        os.rename(subdir + '/' + names_list[i], subdir + '/' + newname)
+
+
+                    names_list[i]=newname
+
+
+
+    # GUI
+
+    print('')
+    if len(dupl_solved_names_list): #afterall print
+        print('-'*80)
+        print('|' + ('Solved duplicates: ').center(78,' ') + '|\n')
+        for item in dupl_solved_names_list:
+            print('\033[1m' + item + '\033[0m')
+        print('\n' + '|' + ' '*78 + '|')
+
+    print('\033[1m Done. \033[0m'.center(88,'-') + '\n')
+
+
+
+# PROCESS
+
+if __name__ == '__main__':
+    main()
