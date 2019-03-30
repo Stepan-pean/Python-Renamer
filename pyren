@@ -118,7 +118,7 @@ def main():
                         else:
                             newname=newname+'(copy)' #or add "(copy)" at the end
                         dupl_solved=True
-                    if dupl_solved and not(subdir+'/'+newname0 in dupl_solved_names_list): #reason what I'm using newname0
+                    if dupl_solved and not(subdir+'/'+newname0 in dupl_solved_names_list): #reason why I'm using newname0
                         dupl_solved_names_list.append(subdir+'/'+newname0)
                         dupl_solved=False
 
