@@ -53,6 +53,7 @@ def main():
     dupl_solved=False
     dupl_solved_names_list = []
     next_dir=False
+    print_dir=""
 
 
 
@@ -107,8 +108,9 @@ def main():
                 newname0=methods(args.method,names_list[i],args.arg1,args.arg2) #call rename function (names_list[i]-->newname0)
                 if newname0!=names_list[i]: #only changed name
 
-                    if next_dir:
-                        print('\n'+subdir+'/'+'\n')
+                    if next_dir and print_dir!=subdir:
+                        print_dir=subdir
+                        print('\n'+print_dir+'/'+'\n')
 
                     newname=newname0
 
